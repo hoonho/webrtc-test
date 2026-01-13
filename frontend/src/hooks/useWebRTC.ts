@@ -33,7 +33,7 @@ export function useWebRTC({
   roomId,
   oderId,
   odername,
-  serverUrl = 'http://localhost:8080',
+  serverUrl = 'http://localhost:8082',
 }: UseWebRTCOptions): UseWebRTCReturn {
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const [peers, setPeers] = useState<Map<string, PeerConnection>>(new Map());

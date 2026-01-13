@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from './Header';
 import { RoomList } from './RoomList';
 import { OnlineUsersSidebar } from './OnlineUsersSidebar';
+import { useAuth } from '../../contexts/AuthContext';
 import './MainLayout.css';
 
 // Mock data for demonstration
@@ -24,11 +25,14 @@ interface MainLayoutProps {
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const { user, logout } = useAuth();
+
   return (
     <div className="main-layout">
       <Header 
-        user={{ nickname: 'GuestUser' }}
-        onSearch={(q) => console.log('Searching:', q)} 
+        user={{ nickname: user?.nickname || 'Guest' }}
+        onSearch={(q) => console.log('Searching:', q)}
+        onLogout={logout}
       />
       
       <div className="layout-body">

@@ -20,7 +20,7 @@ export function useSocketChat({
   roomId,
   oderId,
   odername,
-  serverUrl = 'http://localhost:8080',
+  serverUrl = 'http://localhost:8082',
   onTranslate,
 }: UseSocketChatOptions): UseSocketChatReturn {
   const [messages, setMessages] = useState<ChatMessage[]>([]);

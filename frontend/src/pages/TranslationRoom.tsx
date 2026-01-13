@@ -8,8 +8,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { ChatMessage, SUPPORTED_LANGUAGES, LanguageCode } from '../types';
 import './TranslationRoom.css';
 
-// Janus server URL - proxied through backend to avoid CORS issues
-const JANUS_SERVER_URL = '/api/janus';
+// Janus server URL - direct connection (same as janus_client/videoroomtest.js)
+const JANUS_SERVER_URL = 'https://janus.jsflux.co.kr/janus';
 
 export const TranslationRoom: React.FC = () => {
   const { roomId } = useParams<{ roomId: string }>();
