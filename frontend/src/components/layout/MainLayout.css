@@ -1,0 +1,45 @@
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent; /* Let body gradient show through */
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.layout-content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  /* Add padding if needed, but RoomList has its own container padding */
+}
+
+.layout-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border-left: 1px solid var(--panel-border);
+  background: rgba(11, 15, 23, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 1024px) {
+  .layout-sidebar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 50;
+  }
+  
+  .layout-sidebar.open {
+    transform: translateX(0);
+  }
+}

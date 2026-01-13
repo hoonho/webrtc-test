@@ -1,0 +1,143 @@
+.karaoke-room {
+  height: 100vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--text);
+}
+
+.room-header {
+  height: 70px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--panel-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.back-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  transition: 0.2s;
+  font-weight: 600;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.room-info h1 {
+  font-size: 20px;
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.room-id {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: monospace;
+}
+
+.connection-status {
+  font-family: inherit;
+}
+
+.connection-status.connected {
+  color: #7ef3c2;
+}
+
+.connection-status.connecting {
+  color: #ffb347;
+}
+
+.room-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 240px 1fr 240px; /* 4:3:4 ratio effectively with fixed sidebars */
+  grid-template-rows: 1fr; /* Force grid to respect container height */
+  gap: 16px;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.side-column {
+  height: 100%;
+  overflow-y: auto;
+  /* Hide scrollbar for cleaner look */
+  scrollbar-width: none; 
+  min-height: 0; /* Enable shrinking */
+}
+
+.side-column::-webkit-scrollbar {
+  display: none;
+}
+
+.center-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  min-width: 0; /* Prevent flex items from overflowing */
+  overflow: hidden; /* Ensure content stays within column */
+}
+
+.youtube-section {
+  flex: 1.5; /* Takes up 60% of vertical space roughly */
+  min-height: 0; /* Important for flex child scrolling/sizing */
+}
+
+.chat-section {
+  flex: 1; /* Takes up 40% of vertical space */
+  min-height: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .room-layout {
+    grid-template-columns: 200px 1fr 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  .room-layout {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+
+  .side-column {
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .side-column.left {
+    order: 2;
+  }
+
+  .side-column.right {
+    order: 3;
+  }
+
+  .center-column {
+    order: 1;
+    height: auto;
+    min-height: 600px;
+  }
+}

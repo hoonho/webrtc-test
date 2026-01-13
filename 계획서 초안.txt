@@ -282,3 +282,133 @@ MVP에서는 **안1**이 “노래방” 체감이 더 좋고, 시연 임팩트�
 - 데모 시나리오 3종(노래방/합주/스테이션)
 
 ---
+
+## 13) 화면/UX 설계(초안)
+
+### 13.1 핵심 화면 목록
+
+- **랜딩/로그인**: 소셜/이메일 로그인, 서비스 소개, 데모 영상
+- **로비**: 공개 방 목록/검색, 최근 방, 내 즐겨찾기
+- **방 생성**: 모드(노래방/스테이션/세션), 공개/비공개, 인원 제한, 비밀번호
+- **방 내부(노래방/세션)**: 참여자 리스트, 마이크 상태, 채팅, MR 큐, 가사 뷰, 카운트다운
+- **방 내부(스테이션)**: 현재 트랙/영상, 진행 상태, 리액션, 채팅
+- **디바이스 설정 모달**: 마이크/스피커 선택, 테스트 녹음, 에코 캔슬 옵션
+- **네트워크 상태 패널**: RTT/지터/패킷로스, 권장 안내(유선/헤드폰)
+
+### 13.2 사용자 여정(핵심 플로우)
+
+1. 로그인 → 로비 → 방 생성(노래방 모드)
+2. 디바이스 설정 → 마이크 테스트 → MR 검색/선곡
+3. 큐 승인/카운트다운 → 합창 시작 → 채팅/리액션
+4. 일시정지/seek → 재동기화 → 종료/퇴장
+
+---
+
+## 14) API 초안(REST + STOMP)
+
+### 14.1 REST(초안)
+
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/users/me`
+- `GET /api/rooms`
+- `POST /api/rooms`
+- `GET /api/rooms/{roomId}`
+- `POST /api/rooms/{roomId}/join`
+- `POST /api/rooms/{roomId}/leave`
+- `POST /api/rooms/{roomId}/kick`
+- `GET /api/rooms/{roomId}/members`
+- `GET /api/tracks/search?query=...`
+- `POST /api/rooms/{roomId}/queue`
+- `PATCH /api/rooms/{roomId}/queue/{queueItemId}`
+- `GET /api/rooms/{roomId}/playback`
+- `PATCH /api/rooms/{roomId}/playback`
+
+### 14.2 STOMP(초안)
+
+- `/topic/rooms/{roomId}/chat` (채팅)
+- `/topic/rooms/{roomId}/presence` (입장/퇴장/준비 상태)
+- `/topic/rooms/{roomId}/signal` (offer/answer/ice)
+- `/topic/rooms/{roomId}/sync` (재생 시작/정지/seek/카운트다운)
+- `/app/rooms/{roomId}/chat` (클라이언트 송신)
+- `/app/rooms/{roomId}/signal` (시그널링 송신)
+- `/app/rooms/{roomId}/sync` (동기화 송신)
+
+---
+
+## 15) DB 설계(초안)
+
+### 15.1 테이블 요약
+
+- `app_user` 사용자
+- `room` 방
+- `room_member` 방 참여자
+- `chat_message` 채팅
+- `track` MR 트랙
+- `queue_item` 대기열
+- `playback_state` 재생 상태
+- `recording` 녹음(2차)
+
+### 15.2 제약/인덱스 설계
+
+- 사용자 이메일 유니크
+- 방/유저 조합 유니크(중복 참여 방지)
+- 방/채팅/큐 조회용 인덱스
+- 상태 값은 enum 문자열로 저장(서버에서 검증)
+
+### 15.3 로컬 H2 스키마
+
+로컬 H2용 `schema.sql`과 샘플 데이터 `data.sql`을 준비한다.
+
+---
+
+## 16) 개발 일정(예시)
+
+### 16.1 1~2주차: 기반 구축
+
+- 프로젝트 세팅, 공통 레이아웃/라우팅
+- WebSocket 연결/채팅, 방 CRUD
+- H2 DB 스키마/샘플 데이터
+
+### 16.2 3~4주차: 핵심 기능
+
+- WebRTC 시그널링/오디오 송수신
+- MR 큐/동기화 재생
+- “마이크+MR” 믹싱 송출
+
+### 16.3 5~6주차: 안정화/시연
+
+- 네트워크 품질 표시/복구 UX
+- 브라우저/장치 호환성 테스트
+- 데모 시나리오 정리 및 발표 자료
+
+---
+
+## 17) 테스트 계획(초안)
+
+### 17.1 기능 테스트
+
+- 방 생성/입장/퇴장, 권한, 강퇴
+- MR 검색/큐/동기화 재생
+- 마이크 선택/테스트/송출
+
+### 17.2 품질/호환성
+
+- 브라우저(Chrome/Edge/Safari) 기본 시나리오
+- 네트워크 변동(유선/와이파이 전환, 지연 시 복구)
+- 헤드폰/스피커 전환, AEC/AGC 옵션
+
+### 17.3 부하/동시성
+
+- 2~6인 방 3개 동시 테스트
+- 큐/채팅 이벤트 폭주 시 처리 확인
+
+---
+
+## 18) 운영/배포 관점(간단 정리)
+
+- 개발: 로컬 H2 + 테스트 데이터
+- 스테이징: Docker + Nginx + TURN 서버(coturn)
+- 운영: 로그/지표 모니터링, 장애 대응 시나리오 문서화
+
+---

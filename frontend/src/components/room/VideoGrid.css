@@ -1,0 +1,135 @@
+.video-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  width: 240px; /* Fixed width for sidebars */
+}
+
+.video-slot {
+  flex: 1;
+  background: var(--panel-soft);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  min-height: 0; /* Allow slot to shrink below content size if needed */
+}
+
+.video-slot:hover {
+  border-color: rgba(52, 211, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.member-video {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.member-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(140deg, #1a2230, #0b0f17);
+}
+
+.avatar-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-initial {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--muted);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.member-info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nickname {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mute-icon {
+  font-size: 12px;
+}
+
+.empty-slot {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--panel-border);
+  font-size: 14px;
+  font-weight: 500;
+  border: 2px dashed var(--panel-border);
+  border-radius: 14px;
+  margin: 4px; /* To show the dashed border inside */
+}
+
+/* Connection indicator */
+.connection-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.connection-indicator.connected {
+  background: var(--highlight);
+  box-shadow: 0 0 8px var(--highlight);
+}
+
+.connection-indicator.connecting {
+  background: var(--warning, #f3d02e);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.4; }
+}

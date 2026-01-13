@@ -1,0 +1,58 @@
+.room-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.control-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--panel-border);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text);
+  padding: 0;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.control-btn.active {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: white;
+}
+
+.control-btn .icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: var(--panel-border);
+  margin: 0 4px;
+}
+
+.control-btn.leave {
+  background: rgba(255, 107, 107, 0.15);
+  border-color: rgba(255, 107, 107, 0.4);
+  color: #ff9b9b;
+  width: auto;
+  padding: 0 16px;
+  gap: 8px;
+  display: flex;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.control-btn.leave:hover {
+  background: rgba(255, 107, 107, 0.25);
+}

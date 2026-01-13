@@ -1,0 +1,88 @@
+.youtube-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden; /* Prevent overflow */
+}
+
+.player-wrapper {
+  position: relative;
+  width: 100%;
+  flex: 1; /* Fill remaining height */
+  min-height: 0; /* Enable shrinking */
+  background: black;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.player-wrapper iframe,
+.player-wrapper .player-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.player-placeholder {
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at center, #1a2230 0%, #000 100%);
+}
+
+.placeholder-content {
+  text-align: center;
+  color: var(--muted);
+}
+
+.placeholder-content .icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+
+.placeholder-content h3 {
+  color: var(--text);
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.player-controls {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.player-controls input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--panel-border);
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: 12px;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.player-controls input:focus {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
